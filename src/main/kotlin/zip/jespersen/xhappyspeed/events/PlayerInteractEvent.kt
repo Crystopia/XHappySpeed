@@ -1,6 +1,6 @@
-package dev.xyzjesper.simplemcutility.events
+package zip.jespersen.xhappyspeed.events
 
-import dev.xyzjesper.simplemcutility.SimpleMCUtility
+import zip.jespersen.xhappyspeed.XHappySpeedPlugin
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.NamespacedKey
 import org.bukkit.attribute.Attribute
@@ -11,13 +11,15 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerInteractAtEntityEvent
 import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.persistence.PersistentDataType
+import zip.jespersen.xhappyspeed.Configs
 
 object PlayerInteractEvent : Listener {
 
-    val key = NamespacedKey(SimpleMCUtility.instance, "parked")
+    val key = NamespacedKey(XHappySpeedPlugin.instance, "parked")
 
     @EventHandler
     fun onInteract(event: PlayerInteractAtEntityEvent) {
+        if (!Configs.config.data.enableParking) return
         val player = event.player
         val mm = MiniMessage.miniMessage()
         val target = event.rightClicked
@@ -29,12 +31,12 @@ object PlayerInteractEvent : Listener {
 
             if (target.persistentDataContainer.get(key, PersistentDataType.BOOLEAN) == true) {
                 flySpeed!!.baseValue = 0.05
-                SimpleMCUtility.instance.setParked(false, target)
-                return event.player.sendActionBar(mm.deserialize("<gray>Now your Happy Ghast can drive again!</gray>"))
+                XHappySpeedPlugin.instance.setParked(false, target)
+                return event.player.sendActionBar(mm.deserialize(Configs.messages.data.happyGhastUnPark))
             } else {
                 flySpeed!!.baseValue = 0.0
-                SimpleMCUtility.instance.setParked(true, target)
-                return event.player.sendActionBar(mm.deserialize("<color:#57ff45>The Happy Ghast has now been parked.</color>"))
+                XHappySpeedPlugin.instance.setParked(true, target)
+                return event.player.sendActionBar(mm.deserialize(Configs.messages.data.happyGhastParked))
             }
         }
     }
