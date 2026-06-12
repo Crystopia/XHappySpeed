@@ -1,5 +1,6 @@
 # XHappySpeed
-> Download the latest Release [@here](https://github.com/Crystopia/XHappySpeed/releases)
+> Download the latest Release [@here](https://github.com/Crystopia/XHappySpeed/releases)<br />
+
 Simple plugin for Minecraft that enhances the Happy Ghasts added in the 1.21.10. 
 
 ## Features
